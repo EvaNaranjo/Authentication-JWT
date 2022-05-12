@@ -2,13 +2,15 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify, url_for, Blueprint 
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.admin import setup_admin
 from api.models import db, User
+
+api=Blueprint("api", __name__)
 
 
 #from models import Person
@@ -27,7 +29,8 @@ MIGRATE = Migrate(app, db)
 db.init_app(app)
 CORS(app)
 setup_admin(app)
-jwt = JWTManager(app)
+jwt = JWTManager(api)
+
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -35,12 +38,12 @@ def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
-@app.route('/')
+@api.route('/')
 def sitemap():
     return generate_sitemap(app)
 
 
-@app.route('/user/signup', methods=['POST'])
+@api.route('/user/signup', methods=['POST'])
 def user_signup():
     
     body = request.get_json(force=True)
@@ -56,7 +59,7 @@ def user_signup():
     print(response.get_data())
     return response,201
 
-@app.route('/user/login', methods=['POST'])
+@api.route('/user/login', methods=['POST'])
 def user_login():
     body = request.get_json(force=True)
     print(body)
@@ -70,14 +73,14 @@ def user_login():
         return jsonify("Error user dont exist"),401
 
 
-@app.route('/user', methods=['GET'])
+@api.route('/user', methods=['GET'])
 @jwt_required()
 def get_user():
     user_token=get_jwt_identity()
     print(user_token)
     user=User.query.get(user_token)
     response = jsonify(user.serialize())
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    # response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response, 200
 
