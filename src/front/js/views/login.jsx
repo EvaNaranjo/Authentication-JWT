@@ -15,10 +15,10 @@ export const Login = () => {
 
 	function login() {
 		fetch(
-			"https://3000-4geeksacademy-flaskresth-d6ni1ctu1pe.ws-eu33.gitpod.io/user/login",
+			"https://3001-evanaranjo-authenticati-sgjjm35qvda.ws-eu44.gitpod.io/api/user/login",
 
 			{
-				//mode: "no-cors",
+				mode: "no-cors",
 				method: "POST",
 				body: JSON.stringify({
 					email: email,

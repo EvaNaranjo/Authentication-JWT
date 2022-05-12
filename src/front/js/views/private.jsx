@@ -13,9 +13,9 @@ export const Private = () => {
 			history.push("/user/login");
 		} else {
 			fetch(
-				"https://3000-4geeksacademy-flaskresth-d6ni1ctu1pe.ws-eu33.gitpod.io/user",
+				"https://3001-evanaranjo-authenticati-sgjjm35qvda.ws-eu44.gitpod.io/api/user",
 				{
-					//mode: "no-cors",
+					mode: "no-cors",
 					method: "GET",
 					headers: {
 						Authorizaton: `Bearer ${token}`,
