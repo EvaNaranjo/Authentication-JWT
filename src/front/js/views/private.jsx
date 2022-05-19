@@ -13,7 +13,7 @@ export const Private = () => {
 			history.push("/user/login");
 		} else {
 			fetch(
-				"https://3001-evanaranjo-authenticati-sgjjm35qvda.ws-eu44.gitpod.io/api/user",
+				"https://3001-evanaranjo-authenticati-gp3t0smv8tg.ws-eu45.gitpod.io/api/user",
 				{
 					mode: "no-cors",
 					method: "GET",
