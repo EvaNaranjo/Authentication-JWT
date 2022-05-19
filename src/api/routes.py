@@ -20,27 +20,22 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
-app = Flask(__name__)
-app.url_map.strict_slashes = False
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
-MIGRATE = Migrate(app, db)
-db.init_app(app)
-CORS(app)
-setup_admin(app)
-jwt = JWTManager(app)
+#app = Flask(__name__)
+#app.url_map.strict_slashes = False
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_CONNECTION_STRING')
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config["JWT_SECRET_KEY"] = os.environ.get("JWT_SECRET_KEY")
+#MIGRATE = Migrate(app, db)
+#db.init_app(app)
+#CORS(app)
+#setup_admin(app)
+#jwt = JWTManager(app)
 
-
-# Handle/serialize errors like a JSON object
-@app.errorhandler(APIException)
-def handle_invalid_usage(error):
-    return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
-@api.route('/')
-def sitemap():
-    return generate_sitemap(app)
+#@api.route('/')
+#def sitemap():
+    #return generate_sitemap(app)
 
 
 @api.route('/user/signup', methods=['POST'])
@@ -53,8 +48,8 @@ def user_signup():
     db.session.commit()
     
     response= jsonify(new_user.serialize())
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    response.headers.add('Content-Type', 'application/json')
+    #response.headers.add('Access-Control-Allow-Origin', '*')
+    #response.headers.add('Content-Type', 'application/json')
 
     print(response.get_data())
     return response,201
@@ -67,7 +62,7 @@ def user_login():
     if user.password == body["password"]:
         access_token = create_access_token(identity = user.id)
         response = jsonify(access_token)
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        #response.headers.add('Access-Control-Allow-Origin', '*')
         return response,200
     else:
         return jsonify("Error user dont exist"),401
