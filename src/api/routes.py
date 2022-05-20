@@ -41,7 +41,7 @@ from flask_jwt_extended import JWTManager
 @api.route('/user/signup', methods=['POST'])
 def user_signup():
     
-    body = request.get_json(force=True)
+    body = request.get_json()
     print(body)
     new_user=User(email=body["email"], password=body["password"], is_active=True)
     db.session.add(new_user)

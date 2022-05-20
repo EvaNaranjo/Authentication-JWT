@@ -14,7 +14,7 @@ export const Signup = () => {
 
   function register() {
     fetch(
-       "https://3001-evanaranjo-authenticati-gp3t0smv8tg.ws-eu45.gitpod.io/api/user/signup",
+      "https://3001-evanaranjo-authenticati-0z7wvq9aqmi.ws-eu45.gitpod.io/api/user/signup",
 
       {
         mode: "no-cors",
@@ -28,16 +28,13 @@ export const Signup = () => {
         },
       }
     )
-      .then((resp) => {
-        resp.json()
-      })
+      .then(response => response.json())
+
       .then((data) => {
         console.log(data); //guardar datos en variable estado
         history.push("/private");
       })
       .catch((err) => console.log(err));
-
-    
   }
   return (
     <div>
